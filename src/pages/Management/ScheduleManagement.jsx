@@ -1,0 +1,136 @@
+import Pagination from "../../components/Pagination";
+import Header from "../../components/Header";
+import SideBar from "../../components/SideBar";
+import DetailClass from "../../components/DetailClass";
+import EModal from "../../components/EModal";
+import BodyHeader from "../../components/BodyHeader";
+import { useEffect, useState } from "react";
+import { Modal } from "antd";
+import { deleteC } from "/src/features/classes/ClassSlice.js";
+import { Button } from "flowbite-react";
+import AddSchedule from "../../components/AddSchedule";
+import { getCApi } from '/src/features/customApi/customAPI.js';
+function ScheduleManagement() {
+  const [schedules, setSchedules] = useState([]);
+  const [reload, setReload] = useState(false);
+  useEffect(() => {
+      getCApi("/schedule",setSchedules);
+  }, [reload]);
+  console.log(reload);
+console.log(schedules);
+  return (
+    <>
+      <Header />
+      <SideBar />
+
+      <div className="p-4 sm:ml-64">
+        <div className="p-4 rounded-lg mt-14">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "start",
+            }}
+            className="flex justify-center items-start "
+          >
+            <BodyHeader text={"Quản lý lịch học"} />
+            <AddSchedule setReload={setReload} reload={reload}/>
+          </div>
+
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              {/* THead */}
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    ID
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Tên lớp
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Tên giáo viên
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Module học
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Thời gian bắt đầu
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                  Trạng thái
+                  </th>
+                  <th colSpan={3} className="text-center ">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {schedules?.map((cls) => {
+                  return (
+                    <tr
+                      key={cls.id}
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    >
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {cls.id}
+                      </th>
+                      <td className="px-6 py-4">{cls.className}</td>
+                      <td className="px-6 py-4">{cls.teacherName}</td>
+
+                      <td className="px-6 py-4">{cls.moduleName}</td>
+
+                      <td className="px-6 py-4">{cls.timeStart}</td>
+                      <td className="px-6 py-4">
+                        <label className="inline-flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            defaultValue=""
+                            className="sr-only peer"
+                            defaultChecked="Active"
+                          />
+                          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
+                        </label>
+                      </td>
+                      <td>
+                        <DetailClass data={cls} />
+                      </td>
+                      <td>
+                        <Button
+                          onClick={() => {
+                            Modal.confirm({
+                              title: "Xác nhận",
+                              content: "Bạn có chắc chắn với hành động này?",
+                              onOk: () => {
+                                dispatch(deleteC(cls.id))
+                                  .then(() => {})
+                                  .catch(() => {});
+                              },
+                              onCancel: () => {},
+                            });
+                          }}
+                        >
+                          Xóa
+                        </Button>
+                      </td>
+
+                      <td>{<EModal data={cls} />}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          <Pagination />
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default ScheduleManagement;
