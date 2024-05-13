@@ -9,18 +9,20 @@ export const getCApi = async (str, setData) => {
   setData(response.data);
 };
 
-export const createCApi = async (str, values) => {
-  const response = await axios.post(URLAPI + str, values)
-  .then(response => {
-    console.log('Phản hồi từ máy chủ:', response.data);
-  })
-  .catch(error => {
-    console.error('Lỗi:', error)
-  })
+export const createCApi = async (str, values, setError) => {
+  const response = await axios
+    .post(URLAPI + str, values)
+    .then((response) => {
+      console.log("Phản hồi từ máy chủ:", response.data);
+    })
+    .catch((error) => {
+      console.error("Lỗi:", error.response.data.errorMessage);
+      setError(error.response.data.errorMessage);
+    });
 };
 
 export const postAndGetData = async (str, values, setData) => {
-  const response = await axios.post(URLAPI + str, values)
+  const response = await axios.post(URLAPI + str, values);
   console.log("Data trả ra:");
   console.log(response.data);
   setData(response.data);

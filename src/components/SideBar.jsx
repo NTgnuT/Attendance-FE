@@ -77,7 +77,7 @@ function SideBar() {
               </div>
             </Link>
           </li>
-          
+
           <li>
             <Link
               to="/ModuleCourseManagement"
@@ -124,6 +124,22 @@ function SideBar() {
                   className="shrink-0 my-auto w-6 aspect-square"
                 />
                 <div className="flex-auto">Quản lý lịch học</div>
+              </div>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/StatisticManagement"
+              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            >
+              <div className="flex gap-2.5 justify-center  py-2 text-base leading-7 text-black">
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/34e713fe3d1876499481f1070e4d805bda0a98960ade92a692bec4b390680d69?apiKey=a365ccf4d9914ba4a3de4c73152edf03&"
+                  alt=""
+                  className="shrink-0 my-auto w-6 aspect-square"
+                />
+                <div className="flex-auto">Thống kê</div>
               </div>
             </Link>
           </li>

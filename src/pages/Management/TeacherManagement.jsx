@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import "flowbite/dist/flowbite.js";
 import {
   fetchTeacher,
-  deleteTeacher
+  deleteTeacher,
   //   selectAllClass,
 } from "../../features/teachers/TeacherSlice.js";
 import { Button } from "flowbite-react";
@@ -18,12 +18,20 @@ import { Modal } from "antd";
 // import {Loader} from "react-loader-spinner";
 // import { TailSpin } from 'react-loader-spinner';
 
+const formattedDate = (dateString) => {
+  const datePart = dateString.split("T")[0];
+  const parts = datePart.split("-");
+  const year = parts[0];
+  const month = parts[1];
+  const day = parts[2];
+  return day + "/" + month + "/" + year;
+};
+
 function CourseManagement() {
   const dispatch = useDispatch();
   const teachers = useSelector((state) => state.teachers.teachers);
   const fetchStatus = useSelector((state) => state.teachers.status);
   const [keyword, setKeyword] = useState("");
- 
 
   useEffect(() => {
     if (fetchStatus === "idle") {
@@ -93,14 +101,14 @@ function CourseManagement() {
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        {cls.teacherID}
+                        {cls.instructorId}
                       </th>
                       <td className="px-6 py-4">{cls.name}</td>
                       <td className="px-6 py-4">{cls.email}</td>
 
                       <td className="px-6 py-4">{cls.phoneNumber}</td>
                       <td className="px-6 py-4">{cls.address}</td>
-                      <td className="px-6 py-4">{cls.dob}</td>
+                      <td className="px-6 py-4">{formattedDate(cls.dob)}</td>
                       <td className="px-6 py-4">
                         <label className="inline-flex items-center cursor-pointer">
                           <input
@@ -114,7 +122,7 @@ function CourseManagement() {
                       </td>
 
                       <td className="px-6 py-4 text-right">
-                      <Button
+                        <Button
                           onClick={() => {
                             Modal.confirm({
                               title: "Xác nhận",
@@ -145,7 +153,7 @@ function CourseManagement() {
             </table>
           </div>
 
-          <Pagination />
+          {/* <Pagination /> */}
         </div>
       </div>
     </>

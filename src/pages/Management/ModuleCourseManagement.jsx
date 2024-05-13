@@ -14,20 +14,27 @@ import {
   deleteM,
 } from "../../features/moduleCourses/ModuleCourseSlice.js";
 import { Button } from "flowbite-react";
+import { getCApi } from "/src/features/customApi/customAPI.js";
 
 export default function ModuleCourseManagement() {
-  const [data, setData] = useState(null);
-  const dispatch = useDispatch();
+  // const [data, setData] = useState(null);
+  // const dispatch = useDispatch();
 
-  const status = useSelector((state) => state.moduleCourses.status);
-  const moduleCourses = useSelector(
-    (state) => state.moduleCourses.moduleCourse
-  );
+  // const status = useSelector((state) => state.moduleCourses.status);
+  // const moduleCourses = useSelector(
+  //   (state) => state.moduleCourses.moduleCourse
+  // );
+  // useEffect(() => {
+  //   if (status === "idle") {
+  //     dispatch(fetchModuleCourse());
+  //   }
+  // }, [moduleCourses, status, dispatch]);
+  const [moduleCourse, setModuleCourse] = useState([]);
+
+  console.log(moduleCourse);
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchModuleCourse());
-    }
-  }, [moduleCourses, status, dispatch]);
+    getCApi("/module-courses", setModuleCourse);
+  }, []);
 
   return (
     <div>
@@ -65,9 +72,9 @@ export default function ModuleCourseManagement() {
                     Tên khóa học
                   </th>
 
-                  <th scope="col" className="px-6 py-3">
+                  {/* <th scope="col" className="px-6 py-3">
                     Trạng thái
-                  </th>
+                  </th> */}
                   <th colSpan={2} className="text-center ">
                     Action
                   </th>
@@ -75,7 +82,7 @@ export default function ModuleCourseManagement() {
               </thead>
 
               <tbody>
-                {moduleCourses?.map((cls) => {
+                {moduleCourse?.map((cls) => {
                   return (
                     <tr
                       key={cls.id}
@@ -88,12 +95,12 @@ export default function ModuleCourseManagement() {
                         {cls.id}
                       </th>
                       <td className="px-6 py-4">{cls.moduleName}</td>
-                      <td className="px-6 py-4">{cls.time}</td>
+                      <td className="px-6 py-4">{cls.time} tháng</td>
 
-                      <td className="px-6 py-4">{cls.course.title}</td>
+                      <td className="px-6 py-4">{cls.courseName}</td>
                       {/* <td className="px-6 py-4">{cls.dob}</td>
                       <td className="px-6 py-4">{cls?.aclass?.name}</td> */}
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         <label className="inline-flex items-center cursor-pointer">
                           <input
                             type="checkbox"
@@ -102,14 +109,11 @@ export default function ModuleCourseManagement() {
                             defaultChecked="Active"
                           />
                           <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
-                          {/* <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                            Checked toggle
-                          </span> */}
                         </label>
-                      </td>
+                      </td> */}
                       {/* <td className="px-6 py-4">{cls.teacher.name}</td> */}
 
-                      <td >
+                      <td>
                         <Button
                           onClick={() => {
                             Modal.confirm({
@@ -130,7 +134,6 @@ export default function ModuleCourseManagement() {
 
                       <td>
                         <EditModuleCourseModal data={cls} />
-                   
                       </td>
                     </tr>
                   );
@@ -154,7 +157,7 @@ export default function ModuleCourseManagement() {
             {/* <EModal data={data} /> */}
           </div>
 
-          <Pagination />
+          {/* <Pagination /> */}
         </div>
       </div>
 

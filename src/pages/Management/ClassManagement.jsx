@@ -9,18 +9,23 @@ import { useEffect, useState } from "react";
 import { Modal } from "antd";
 import { fetchClass, deleteC } from "/src/features/classes/ClassSlice.js";
 import { Button } from "flowbite-react";
-import { getCApi } from '/src/features/customApi/customAPI.js';
+import { getCApi } from "/src/features/customApi/customAPI.js";
 function ClassManagement() {
   // const dispatch = useDispatch();
   // const classes = useSelector((state) => state.classes.class);
   // const fetchStatus = useSelector((state) => state.classes.status);
   const [clas, setClas] = useState([]);
-  useEffect(() => {
-    // if (fetchStatus === "idle") {
+  useEffect(
+    () => {
+      // if (fetchStatus === "idle") {
       // dispatch(fetchClass({ page: 0, size: 10 }));
-      getCApi("/classes",setClas);
-    // }
-  }, [/*dispatch, fetchStatus, classes,*/ ]);
+      getCApi("/classes", setClas);
+      // }
+    },
+    [
+      /*dispatch, fetchStatus, classes,*/
+    ]
+  );
 
   console.log(clas);
 
@@ -60,9 +65,9 @@ function ClassManagement() {
                   <th scope="col" className="px-6 py-3">
                     Thời gian bắt đầu
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  {/* <th scope="col" className="px-6 py-3">
                     Trạng thái
-                  </th>
+                  </th> */}
                   <th scope="col" className="px-6 py-3">
                     Khóa học
                   </th>
@@ -90,7 +95,7 @@ function ClassManagement() {
 
                       <td className="px-6 py-4">{cls.startTime}</td>
 
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         <label className="inline-flex items-center cursor-pointer">
                           <input
                             type="checkbox"
@@ -100,12 +105,12 @@ function ClassManagement() {
                           />
                           <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
                         </label>
-                      </td>
-                      <td className="px-6 py-4">{cls.courses.title}</td>
+                      </td> */}
+                      <td className="px-6 py-4">{cls.courses}</td>
 
-                      <td>
+                      {/* <td>
                         <DetailClass data={cls} />
-                      </td>
+                      </td> */}
                       <td>
                         <Button
                           onClick={() => {
@@ -133,7 +138,7 @@ function ClassManagement() {
             </table>
           </div>
 
-          <Pagination />
+          {/* <Pagination /> */}
         </div>
       </div>
     </>

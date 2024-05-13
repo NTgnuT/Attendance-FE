@@ -18,6 +18,8 @@ import "./App.css";
 import AttendanceManagement from "./pages/Management/AttendanceManagement.jsx";
 import ScheduleManagement from "./pages/Management/ScheduleManagement.jsx";
 import AttendanceTable from "./pages/Management/AttendanceTable.jsx";
+import StatisticManagement from "./pages/Management/StatisticManagement.jsx";
+import StatisticTable from "./pages/Management/StatisticTable.jsx";
 
 function App() {
   return (
@@ -37,9 +39,17 @@ function App() {
           <Route path="/StudentManagement" element={<StudentManagement />} />
           <Route path="/CourseManagement" element={<CourseManagement />} />
           <Route path="/TeacherManagement" element={<TeacherManagement />} />
-          <Route path="/AttendanceManagement" element={<AttendanceManagement />} />
+          <Route
+            path="/AttendanceManagement"
+            element={<AttendanceManagement />}
+          />
           <Route path="/ScheduleManagement" element={<ScheduleManagement />} />
           <Route path="/AttendanceTable" element={<AttendanceTable />} />
+          <Route path="/StatisticTable" element={<StatisticTable />} />
+          <Route
+            path="/StatisticManagement"
+            element={<StatisticManagement />}
+          />
           <Route
             path="/ModuleCourseManagement"
             element={<ModuleCourseManagement />}

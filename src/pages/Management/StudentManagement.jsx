@@ -6,30 +6,23 @@ import BodyHeader from "../../components/BodyHeader";
 import StudentAddModal from "../../components/StudentAddModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {Modal} from "antd";
-
+import { Modal } from "antd";
 
 import {
   fetchStudents,
-
-  deleteStudent
+  deleteStudent,
 } from "../../features/students/StudentSlice.js";
 import { Button } from "flowbite-react";
-import { getCApi } from '/src/features/customApi/customAPI.js';
-
-
+import { getCApi } from "/src/features/customApi/customAPI.js";
 
 function ClassManagement() {
-  const [students,setStudents] = useState([]);
+  const [students, setStudents] = useState([]);
 
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-      getCApi("/students",setStudents)
+    getCApi("/students", setStudents);
   }, []);
-
-
-
 
   return (
     <>
@@ -46,7 +39,7 @@ function ClassManagement() {
             }}
             className="flex justify-center items-start "
           >
-            <BodyHeader text={"Quản lý học sinh"}  />
+            <BodyHeader text={"Quản lý học sinh"} />
             <StudentAddModal />
           </div>
 
@@ -118,48 +111,37 @@ function ClassManagement() {
                       {/* <td className="px-6 py-4">{cls.teacher.name}</td> */}
 
                       <td className="px-6 py-4 text-right">
-                        <Button 
-                        onClick={()=>{
-                          Modal.confirm({
-                            title:"Xác nhận",
-                            content:"Bạn có muốn thực hiện hành động này?",
-                            onOk:()=>{
-                              dispatch(deleteStudent(cls.id))
-                              .then(()=>{
-                                
-                              })
-                              .catch(()=>{
-
-                              })
-                            },
-                            onCancel:()=>{}
-                          })
-                        }}
-                       >
+                        <Button
+                          onClick={() => {
+                            Modal.confirm({
+                              title: "Xác nhận",
+                              content: "Bạn có muốn thực hiện hành động này?",
+                              onOk: () => {
+                                dispatch(deleteStudent(cls.id))
+                                  .then(() => {})
+                                  .catch(() => {});
+                              },
+                              onCancel: () => {},
+                            });
+                          }}
+                        >
                           Xóa
                         </Button>
                       </td>
 
                       <td className="px-6 py-4 text-right">
-                       
-                      {<EditStudentModal data={cls} />}
-                          
-                        
+                        {<EditStudentModal data={cls} />}
                       </td>
                     </tr>
                   );
                 })}
 
                 {/*  */}
-     
               </tbody>
             </table>
-        
           </div>
 
-          <Pagination />
-
-
+          {/* <Pagination /> */}
         </div>
       </div>
     </>

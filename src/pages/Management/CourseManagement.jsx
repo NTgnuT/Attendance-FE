@@ -10,22 +10,20 @@ import { useEffect, useState } from "react";
 import {
   fetchCourse,
   edit,
-  deleteC
+  deleteC,
   //   selectAllClass,
 } from "../../features/courses/CourseSlice.js";
 import { Button } from "flowbite-react";
 import { Modal } from "antd";
 import DetailCourseClass from "../../components/DetailCourseClass.jsx";
-import { getCApi } from '/src/features/customApi/customAPI.js';
-
-
+import { getCApi } from "/src/features/customApi/customAPI.js";
 
 function CourseManagement() {
   const [courses, setCourses] = useState([]);
 
   console.log(courses);
   useEffect(() => {
-   getCApi("/courses", setCourses)
+    getCApi("/courses", setCourses);
   }, []);
 
   return (
@@ -77,19 +75,19 @@ function CourseManagement() {
                 {courses?.map((cls) => {
                   return (
                     <tr
-                      key={cls.courseId}
+                      key={cls.id}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        {cls.courseId}
+                        {cls.id}
                       </th>
                       <td className="px-6 py-4">{cls.title}</td>
                       <td className="px-6 py-4">{cls.description}</td>
 
-                      <td className="px-6 py-4">{cls.courseTime}</td>
+                      <td className="px-6 py-4">{cls.courseTime} tháng</td>
                       <td className="px-6 py-4">
                         <label className="inline-flex items-center cursor-pointer">
                           <input
@@ -102,11 +100,11 @@ function CourseManagement() {
                         </label>
                       </td>
 
-                      <td >
-                        <DetailCourseClass data={cls}/>
+                      <td>
+                        <DetailCourseClass data={cls} />
                       </td>
-                      <td >
-                      <Button 
+                      <td>
+                        <Button
                           onClick={() => {
                             Modal.confirm({
                               title: "Xác nhận",
@@ -125,21 +123,15 @@ function CourseManagement() {
                         </Button>
                       </td>
 
-                      <td >
-                        {<EditCourseModal data={cls} />}
-                      </td>
+                      <td>{<EditCourseModal data={cls} />}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
-
-
-
-
           </div>
 
-          <Pagination />
+          {/* <Pagination /> */}
         </div>
       </div>
     </>

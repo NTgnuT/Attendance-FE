@@ -1,23 +1,27 @@
-import Pagination from "../../components/Pagination";
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
-import DetailClass from "../../components/DetailClass";
-import EModal from "../../components/EModal";
 import BodyHeader from "../../components/BodyHeader";
 import { useEffect, useState } from "react";
-import { Modal } from "antd";
-import { deleteC } from "/src/features/classes/ClassSlice.js";
-import { Button } from "flowbite-react";
 import AddSchedule from "../../components/AddSchedule";
-import { getCApi } from '/src/features/customApi/customAPI.js';
+import { getCApi } from "/src/features/customApi/customAPI.js";
+
+const formattedDate = (dateString) => {
+  const datePart = dateString.split("T")[0];
+  const parts = datePart.split("-");
+  const year = parts[0];
+  const month = parts[1];
+  const day = parts[2];
+  return day + "/" + month + "/" + year;
+};
+
 function ScheduleManagement() {
   const [schedules, setSchedules] = useState([]);
   const [reload, setReload] = useState(false);
   useEffect(() => {
-      getCApi("/schedule",setSchedules);
+    getCApi("/schedule", setSchedules);
   }, [reload]);
-  console.log(reload);
-console.log(schedules);
+  // console.log(reload);
+  // console.log(schedules);
   return (
     <>
       <Header />
@@ -34,7 +38,7 @@ console.log(schedules);
             className="flex justify-center items-start "
           >
             <BodyHeader text={"Quản lý lịch học"} />
-            <AddSchedule setReload={setReload} reload={reload}/>
+            <AddSchedule setReload={setReload} reload={reload} />
           </div>
 
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -57,12 +61,6 @@ console.log(schedules);
                   <th scope="col" className="px-6 py-3">
                     Thời gian bắt đầu
                   </th>
-                  <th scope="col" className="px-6 py-3">
-                  Trạng thái
-                  </th>
-                  <th colSpan={3} className="text-center ">
-                    Action
-                  </th>
                 </tr>
               </thead>
 
@@ -84,49 +82,15 @@ console.log(schedules);
 
                       <td className="px-6 py-4">{cls.moduleName}</td>
 
-                      <td className="px-6 py-4">{cls.timeStart}</td>
                       <td className="px-6 py-4">
-                        <label className="inline-flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            defaultValue=""
-                            className="sr-only peer"
-                            defaultChecked="Active"
-                          />
-                          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
-                        </label>
+                        {formattedDate(cls.timeStart)}
                       </td>
-                      <td>
-                        <DetailClass data={cls} />
-                      </td>
-                      <td>
-                        <Button
-                          onClick={() => {
-                            Modal.confirm({
-                              title: "Xác nhận",
-                              content: "Bạn có chắc chắn với hành động này?",
-                              onOk: () => {
-                                dispatch(deleteC(cls.id))
-                                  .then(() => {})
-                                  .catch(() => {});
-                              },
-                              onCancel: () => {},
-                            });
-                          }}
-                        >
-                          Xóa
-                        </Button>
-                      </td>
-
-                      <td>{<EModal data={cls} />}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-
-          <Pagination />
         </div>
       </div>
     </>
