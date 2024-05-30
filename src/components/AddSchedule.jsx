@@ -36,7 +36,6 @@ function AddSchedule({ setReload, reload }) {
   const [classId, setclassId] = useState(0);
 
   const [error, setError] = useState("");
-  console.log(error);
   const handleClassChange = async (event) => {
     setcourseId(0);
     let num = event.target.value;

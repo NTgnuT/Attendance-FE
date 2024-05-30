@@ -1,4 +1,4 @@
-function BodyHeader({text}) {
+function BodyHeader({ text }) {
   return (
     <div className="flex justify-between items-center mb-4">
       <div className="flex justify-center items-center">{text}</div>

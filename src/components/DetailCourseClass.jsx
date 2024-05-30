@@ -8,7 +8,6 @@ export default function DetailCourseClass({ data }) {
   const classes = useSelector((state) => state.courses.classes);
   const dispatch = useDispatch();
 
-
   const handleOpenModal = () => {
     setOpenModal11(true);
     dispatch(fetchClassFromCourse(data?.courseId));
@@ -16,7 +15,9 @@ export default function DetailCourseClass({ data }) {
 
   return (
     <>
-      <Button className="" onClick={handleOpenModal}>Xem</Button>
+      <Button className="" onClick={handleOpenModal}>
+        Xem
+      </Button>
       <Modal show={openModal11} onClose={() => setOpenModal11(false)}>
         <Modal.Header className="p-4">{data?.title}</Modal.Header>
         <Modal.Body>

@@ -20,6 +20,7 @@ import ScheduleManagement from "./pages/Management/ScheduleManagement.jsx";
 import AttendanceTable from "./pages/Management/AttendanceTable.jsx";
 import StatisticManagement from "./pages/Management/StatisticManagement.jsx";
 import StatisticTable from "./pages/Management/StatisticTable.jsx";
+import PostManagement from "./pages/Management/PostManagement.jsx";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             element={<ModuleCourseManagement />}
           />
           <Route path="/AddClassModal" element={<AddClassModal />} />
+          <Route path="/PostManagement" element={<PostManagement />} />
         </Routes>
       </BrowserRouter>
     </>

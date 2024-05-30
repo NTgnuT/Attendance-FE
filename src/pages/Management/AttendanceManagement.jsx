@@ -5,7 +5,7 @@ import BodyHeader from "../../components/BodyHeader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getCApi } from "/src/features/customApi/customAPI.js";
-import { useNavigate } from 'react-router';
+import { useNavigate } from "react-router";
 function AttendanceManagement() {
   const [classes, setClasses] = useState([]);
   const [moduleCourses, setModuleCourses] = useState([]);
@@ -44,8 +44,11 @@ function AttendanceManagement() {
     const sClassId = sendClassId.value;
     const sCourseId = sendCourseId.value;
     const sModuleCourseId = sendModuleCourseId.value;
-    navigate('/AttendanceTable', { state: { classId: sClassId, moduleId: sModuleCourseId } });
+    navigate("/AttendanceTable", {
+      state: { classId: sClassId, moduleId: sModuleCourseId },
+    });
   };
+
   useEffect(() => {
     getCApi("/classes", setClasses);
   }, []);
@@ -72,7 +75,7 @@ function AttendanceManagement() {
             className="flex justify-center items-start "
           >
             <BodyHeader text={"Quản lý điểm danh"} />
-            <AddClassModal />
+            {/* <AddClassModal /> */}
           </div>
 
           <form

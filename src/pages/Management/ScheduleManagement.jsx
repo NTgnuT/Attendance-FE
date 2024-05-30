@@ -4,6 +4,10 @@ import BodyHeader from "../../components/BodyHeader";
 import { useEffect, useState } from "react";
 import AddSchedule from "../../components/AddSchedule";
 import { getCApi } from "/src/features/customApi/customAPI.js";
+import { Button } from "flowbite-react";
+import { Modal } from "antd";
+import { deleteSchedule } from "../../features/schedule/ScheduleSlice";
+import { useDispatch } from "react-redux";
 
 const formattedDate = (dateString) => {
   const datePart = dateString.split("T")[0];
@@ -17,6 +21,7 @@ const formattedDate = (dateString) => {
 function ScheduleManagement() {
   const [schedules, setSchedules] = useState([]);
   const [reload, setReload] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     getCApi("/schedule", setSchedules);
   }, [reload]);
@@ -61,6 +66,9 @@ function ScheduleManagement() {
                   <th scope="col" className="px-6 py-3">
                     Thời gian bắt đầu
                   </th>
+                  <th scope="col" className="px-6 py-3">
+                    Hành động
+                  </th>
                 </tr>
               </thead>
 
@@ -84,6 +92,27 @@ function ScheduleManagement() {
 
                       <td className="px-6 py-4">
                         {formattedDate(cls.timeStart)}
+                      </td>
+
+                      <td className="px-6 py-4 text-right">
+                        <Button
+                          onClick={() => {
+                            Modal.confirm({
+                              title: "Xác nhận",
+                              content: "Bạn có muốn thực hiện hành động này?",
+                              onOk: () => {
+                                dispatch(deleteSchedule(cls.id))
+                                  .then(() => {
+                                    setReload(!reload);
+                                  })
+                                  .catch(() => {});
+                              },
+                              onCancel: () => {},
+                            });
+                          }}
+                        >
+                          Xóa
+                        </Button>
                       </td>
                     </tr>
                   );

@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { findAll, deleteCourse, updateCourse, saveCourse,getClassFromCourse } from "./CourseAPI";
+import {
+  findAll,
+  deleteCourse,
+  updateCourse,
+  saveCourse,
+  getClassFromCourse,
+} from "./CourseAPI";
 
 export const addCourse = createAsyncThunk(
   "course/add",
@@ -12,7 +18,6 @@ export const addCourse = createAsyncThunk(
     }
   }
 );
-
 
 export const fetchClassFromCourse = createAsyncThunk(
   "course/fetchClassFromCourse",
@@ -66,7 +71,7 @@ const initialState = {
   course: [],
   status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
   error: null,
-  classes:null,
+  classes: null,
   pagination: {
     page: 0,
     size: 10,
@@ -128,7 +133,7 @@ const courseSlice = createSlice({
       })
       .addCase(fetchClassFromCourse.fulfilled, (state, action) => {
         state.classes = action.payload.data;
-      })
+      });
   },
 });
 

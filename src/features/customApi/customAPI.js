@@ -21,9 +21,16 @@ export const createCApi = async (str, values, setError) => {
     });
 };
 
-export const postAndGetData = async (str, values, setData) => {
-  const response = await axios.post(URLAPI + str, values);
-  console.log("Data trả ra:");
-  console.log(response.data);
-  setData(response.data);
+export const postAndGetData = async (str, values, setData, setError) => {
+  const response = await axios
+    .post(URLAPI + str, values)
+    .then((response) => {
+      console.log("Data trả ra:");
+      console.log(response.data);
+      setData(response.data);
+    })
+    .catch((error) => {
+      console.error("Lỗi:", error.response.data.errorMessage);
+      setError(error.response.data.errorMessage);
+    });
 };

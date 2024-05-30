@@ -6,6 +6,8 @@ import { useNavigate } from "react-router";
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { getCApi, postAndGetData } from "../../features/customApi/customAPI";
+import { Alert } from "flowbite-react";
+import { HiInformationCircle } from "react-icons/hi";
 
 const formattedDate = (dateString) => {
   const datePart = dateString.split("T")[0];
@@ -31,7 +33,7 @@ function AttendanceTable() {
   const navigate = useNavigate();
   // Kiểm tra xem state có dữ liệu được truyền không
   const [dataAttendance, setDataAttendance] = useState([]);
-
+  const [error, setError] = useState("");
   const [attendanceDetails, setAttendanceDetails] = useState([]);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,8 +67,8 @@ function AttendanceTable() {
       .then((response) => {
         console.log("Dữ liệu điểm danh đã được gửi thành công!");
       })
-      .catch((error) => {
-        console.error("Đã xảy ra lỗi khi gửi dữ liệu điểm danh:", error);
+      .catch((e) => {
+        console.error("Đã xảy ra lỗi khi gửi dữ liệu điểm danh:", e);
       });
   };
 
@@ -74,7 +76,7 @@ function AttendanceTable() {
     if (!state) {
       navigate("/AttendanceManagement");
     }
-    postAndGetData("/attendance", state, setDataAttendance);
+    postAndGetData("/attendance", state, setDataAttendance, setError);
   }, []);
   return (
     <>
@@ -92,6 +94,15 @@ function AttendanceTable() {
             className="flex justify-center items-start "
           >
             <BodyHeader text={"Quản lý lịch học"} />
+            {error && (
+              <Alert
+                color="failure"
+                icon={HiInformationCircle}
+                onDismiss={() => setError("")}
+              >
+                <span className="font-medium">{error}</span>
+              </Alert>
+            )}
           </div>
 
           <form>

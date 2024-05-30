@@ -74,7 +74,7 @@ function StatisticManagement() {
             className="flex justify-center items-start "
           >
             <BodyHeader text={"Thống kê"} />
-            <AddClassModal />
+            {/* <AddClassModal /> */}
           </div>
 
           <form
